@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useMediaQuery } from '@mui/material';
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 import { Link } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -297,7 +299,17 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                                 <li className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
                                     <strong>{vendedor.nombreTienda}</strong>
                                     <br />
-                                    <p>Calificación: <Raiting vendedorId={vendedor.vendedor_id}/></p>
+                                    <p>Calificación: 
+                                        <Stack spacing={1} className='rating'>
+                                            <Rating 
+                                                name="half-rating-read" 
+                                                value={vendedor.raiting} 
+                                                precision={0.5} 
+                                                readOnly 
+                                            />
+                                        </Stack>
+                                    </p>
+
                                     {userPosition && vendedor.location?.coordinates && (
                                         <p>
                                             Distancia: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} km
